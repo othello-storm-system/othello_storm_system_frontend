@@ -5,27 +5,33 @@ import sortBy from 'lodash/sortBy';
 import { Tabs } from 'antd';
 
 import useRefreshKey from 'hooks/useRefreshKey';
-import NewMatchSubpanel from './NewMatchSubpanel';
+import NewRoundSubpanel from './NewRoundSubpanel';
+import RoundEditSubpanel from './RoundEditSubpanel';
 import { useTournamentRoundContext } from '../TournamentRoundContext';
 
 const { TabPane } = Tabs;
 
 const MatchesPanelWrapper = styled.div`
-  margin: 0 15px;
+  @media only screen and (min-width: 400px) {
+    margin: 0 15px;
+  }
 `;
 
 function MatchesEditPanel() {
   const { refreshKey, refresh } = useRefreshKey();
-  const { rounds } = useTournamentRoundContext();
+  const { rounds, refresh: refreshRounds } = useTournamentRoundContext();
   return (
     <MatchesPanelWrapper>
       <Tabs defaultActiveKey="0" onChange={refresh}>
-        <TabPane tab="Create New Match" key="0">
-          <NewMatchSubpanel key={refreshKey} />
+        <TabPane tab="Create New Round" key="0">
+          <NewRoundSubpanel key={refreshKey} />
         </TabPane>
-        {sortBy(rounds, 'id').map((round, idx) => (
-          <TabPane tab={round.name} key={idx + 1}>
-            {round.name}
+        {sortBy(rounds, 'id').map(round => (
+          <TabPane tab={round.name} key={round.id}>
+            <RoundEditSubpanel
+              roundId={round.id}
+              refreshRounds={refreshRounds}
+            />
           </TabPane>
         ))}
       </Tabs>

@@ -41,3 +41,8 @@ export enum SpecialConditionScores {
   NotFinished = -1,
   Bye = -2,
 }
+
+export enum PlayerColor {
+  Black = 1,
+  White = 2,
+}

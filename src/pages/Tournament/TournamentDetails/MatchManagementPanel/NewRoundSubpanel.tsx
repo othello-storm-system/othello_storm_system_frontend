@@ -43,7 +43,7 @@ const SubmitButton = styled(Button).attrs({ type: 'primary' })`
   margin-bottom: 10px;
 `;
 
-function NewMatchSubpanel() {
+function NewRoundSubpanel() {
   const [name, setName] = useState('');
   const [type, setType] = useState(RoundTypes.Automatic);
   const [pairedPlayers, setPairedPlayers] = useState<[Player, Player][]>([]);
@@ -231,10 +231,10 @@ function NewMatchSubpanel() {
         </>
       )}
       <SubmitButton loading={isLoading} onClick={handleSubmit}>
-        Create New Match
+        Create New Round
       </SubmitButton>
     </Form>
   );
 }
 
-export default NewMatchSubpanel;
+export default NewRoundSubpanel;

@@ -1,5 +1,6 @@
 import React, { useContext, createContext, ReactNode } from 'react';
 import differenceBy from 'lodash/differenceBy';
+import keyBy from 'lodash/keyBy';
 
 import useGet from 'hooks/useGet';
 import {
@@ -10,10 +11,15 @@ import {
   JoueursPlayer,
 } from 'utils/apiResponseShapes';
 
+export interface PlayersById {
+  [id: number]: Player;
+}
+
 interface TournamentPlayerContextShape {
   players: Player[];
   joueursPlayers: JoueursPlayer[];
   refresh: () => void;
+  playersById: PlayersById;
 }
 
 const TournamentPlayerContext = createContext<TournamentPlayerContextShape>(
@@ -60,6 +66,7 @@ function TournamentPlayerProvider({
             refreshPlayers();
             refreshJoueursPlayers();
           },
+          playersById: keyBy(playerListData.players, player => player.id),
         }}
       >
         {children}
